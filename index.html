@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran Pemasangan WiFi SUNMORI NET</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Wifistyle.css">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="SUNMORI NET.jpg" alt="Logo SUNMORI NET">
+        </div>
+        <h1>Formulir Pendaftaran Pemasangan WiFi</h1>
+        <form id="registrationForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="nama">Nama Lengkap:</label>
+                <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap Anda" required>
+            </div>
+
+            <div class="form-group">
+                <label for="whatsapp">Nomor WhatsApp:</label>
+                <input type="text" id="whatsapp" name="whatsapp" placeholder="Contoh: 6281234567890" required>
+                <div class="info-text">Masukkan nomor WhatsApp Anda dengan kode negara (misal: 62 untuk Indonesia).</div>
+            </div>
+
+            <div class="form-group">
+                <label for="ktp">Foto KTP:</label>
+                <input type="file" id="ktp" name="ktp" accept="image/*" required>
+                <div class="info-text">Harap unggah foto KTP Anda yang jelas (JPG, JPEG, PNG, maks 2MB).</div>
+            </div>
+
+            <div class="form-group">
+                <label for="locationLink">Tautan Lokasi Rumah (Google Maps/Share Loc):</label>
+                <input type="text" id="locationLink" name="locationLink" placeholder="Contoh: https://maps.app.goo.gl/abcdefg12345" required>
+                <div class="info-text">Salin dan tempelkan tautan lokasi rumah Anda dari Google Maps atau aplikasi share loc lainnya.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="paket">Pilih Paket WiFi:</label>
+                <select id="paket" name="paket" required>
+                    <option value="">-- Pilih Paket --</option>
+                    <option value="20mbps">20 MBPS - Rp 180.000</option>
+                    <option value="40mbps">40 MBPS - Rp 235.000</option>
+                    <option value="100mbps">100 MBPS - Rp 346.000</option>
+                    <option value="200mbps">200 MBPS - Rp 568.000</option>
+                </select>
+            </div>
+
+            <button type="submit" class="button">Daftar Sekarang</button>
+        </form>
+
+
+        <div id="message" class=""></div>
+
+        <div class="map-link-section">
+            <p>Lihat Peta Jaringan Kami:</p>
+            <a href="https://www.google.com/maps/d/edit?mid=18rST_oJ7h2jtHIHVo8q_OS4B8WM3jhU" target="_blank" class="map-link-button">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                Lihat Peta Jaringan
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const messageDiv = document.getElementById('message');
+            messageDiv.style.display = 'block';
+            messageDiv.classList.remove('success', 'error', 'info');
+
+            const formData = new FormData(this);
+            const locationLink = document.getElementById('locationLink').value;
+
+            if (!formData.get('nama') || !formData.get('whatsapp') || !formData.get('ktp').name || !locationLink || !formData.get('paket')) {
+                messageDiv.classList.add('error');
+                messageDiv.textContent = 'Harap lengkapi semua data yang diperlukan!';
+                return;
+            }
+
+            if (!locationLink.startsWith('http://') && !locationLink.startsWith('https://')) {
+                messageDiv.classList.add('error');
+                messageDiv.textContent = 'Tautan lokasi tidak valid. Harap masukkan URL lengkap (diawali http:// atau https://).';
+                return;
+            }
+
+            if (formData.get('ktp').size > 2 * 1024 * 1024) {
+                messageDiv.classList.add('error');
+                messageDiv.textContent = 'Ukuran foto KTP terlalu besar. Maksimal 2MB.';
+                return;
+            }
+
+            messageDiv.textContent = 'Mengirimkan data...';
+            messageDiv.classList.add('info');
+
+            fetch('backend/process_registration.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageDiv.classList.remove('info');
+                if (data.status === 'success') {
+                    messageDiv.classList.add('success');
+                    messageDiv.textContent = data.message;
+                    document.getElementById('registrationForm').reset();
+                } else {
+                    messageDiv.classList.add('error');
+                    messageDiv.textContent = data.message;
+                }
+            })
+            .catch(error => {
+                messageDiv.classList.remove('info');
+                messageDiv.classList.add('error');
+                messageDiv.textContent = 'Terjadi kesalahan saat mengirim data: ' + error.message;
+                console.error('Error:', error);
+            });
+        });
+    </script>
+
+    <footer class="site-footer\">
+        <p>&copy; 2025 SUNMORI NET. All rights reserved.</p>
+        <p>Follow us on Instagram: <a href="https://www.instagram.com/sunmori.net.id?igsh=bnRtZjZuMnV3OTAy" target="_blank" rel="noopener noreferrer">@sunmorinet_</a></p>
+        <p>Powered by PT Lintas Satu Visi</p>
+    </footer>
+    </body>
+</html>

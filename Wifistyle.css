@@ -1,0 +1,294 @@
+/* css/style.css */
+
+:root {
+    --primary-color: #4CAF50; /* Hijau SUNMORI NET */
+    --primary-dark: #388E3C; /* Hijau lebih gelap */
+    --secondary-color: #2196F3; /* Biru cerah */
+    --accent-color: #FFC107; /* Kuning aksen */
+    --text-color: #333; /* Warna teks utama */
+    --light-text-color: #666; /* Warna teks sekunder */
+    --bg-color: #f0f2f5; /* Warna latar belakang halaman */
+    --card-bg: #ffffff; /* Warna latar belakang kartu/form */
+    --border-color: #e0e0e0; /* Warna border umum */
+    --input-border: #ccc; /* Warna border input */
+    --focus-border: var(--primary-color); /* Warna border input saat fokus */
+    --success-color: #4CAF50;
+    --error-color: #f44336;
+    --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.08); /* Shadow untuk kartu */
+    --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.12); /* Shadow saat hover */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.container:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo-container img {
+    /* --- PERUBAHAN DI SINI UNTUK MEMBUAT LOGO BULAT --- */
+    width: 150px; /* Atur lebar tetap untuk lingkaran yang sempurna */
+    height: 150px; /* Atur tinggi tetap yang sama dengan lebar */
+    object-fit: cover; /* Penting: agar gambar tidak terdistorsi jika aspek rasionya tidak 1:1 */
+    border-radius: 50%; /* Ini yang membuat bentuk bulat */
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Tambahkan sedikit bayangan agar menonjol */
+    border: 3px solid var(--primary-color); /* Opsional: tambahkan border */
+    /* --- AKHIR PERUBAHAN --- */
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 2em;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--light-text-color);
+    font-size: 0.95em;
+}
+
+input[type="text"],
+input[type="file"],
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="file"]:focus,
+select:focus {
+    border-color: var(--focus-border);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    outline: none;
+}
+
+input[type="file"] {
+    padding: 10px;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: 20px;
+}
+
+.button {
+    display: block;
+    width: 100%;
+    padding: 14px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(76, 175, 80, 0.3);
+}
+
+.button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.info-text {
+    font-size: 0.85em;
+    color: var(--light-text-color);
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+#message {
+    margin-top: 25px;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    display: none;
+}
+
+#message.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+#message.error {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+}
+
+#message.info {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+}
+
+/* Styling tambahan untuk link peta jaringan */
+.map-link-section {
+    margin-top: 40px;
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border-color);
+}
+
+.map-link-section p {
+    font-size: 1.05em;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.map-link-button {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.map-link-button:hover {
+    background-color: #FFD54F;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 193, 7, 0.3);
+}
+
+.map-link-button svg {
+    margin-right: 8px;
+    fill: var(--text-color);
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .container {
+        padding: 30px;
+        margin: 15px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .button {
+        padding: 12px 15px;
+        font-size: 1em;
+    }
+
+    .logo-container img {
+        width: 120px; /* Lebih kecil di layar kecil */
+        height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+    label {
+        font-size: 0.9em;
+    }
+    input[type="text"],
+    input[type="file"],
+    select,
+    .button {
+        font-size: 0.95em;
+        padding: 10px 12px;
+    }
+}
+
+/* css/style.css */
+
+/* ... kode CSS lainnya ... */
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column; /* TAMBAHKAN BARIS INI */
+    justify-content: flex-start; /* Ubah ini menjadi flex-start atau center jika Anda ingin konten berada di tengah vertikal */
+    align-items: center; /* Ubah ini menjadi center untuk memusatkan secara horizontal */
+    min-height: 100vh;
+    box-sizing: border-box;
+    
+}
+
+/* ... sisa kode CSS Anda ... */
+
+.site-footer {
+    text-align: center;
+
+}
